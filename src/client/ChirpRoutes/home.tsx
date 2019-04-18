@@ -14,7 +14,7 @@ const Home: SFC<IHomeProps> = () => {
             let data = await res.json()
             placeChirps(data)
         } catch (err) {
-            (err:string) => console.log(err)
+            (err: string) => console.log(err)
         }
     }
 
@@ -30,16 +30,16 @@ const Home: SFC<IHomeProps> = () => {
         setChirps(stateArr)
     }
     return (
-        <>
-            {chirps.map(
-                (chirp:{ [key: number]: { name: string, text: string } }, index:number) => {
-                return <Chirp key={index} chirpInfo={chirp} />
-                })}
+        <>    
+                {chirps.map(
+                    (chirp: { [key: number]: { name: string, text: string } }, index: number) => {
+                        return <Chirp key={index} chirpInfo={chirp} />
+                    })}
         </>
     )
 }
 
-interface IHomeProps{
+interface IHomeProps {
 
 }
 
