@@ -4,6 +4,7 @@ import './scss/app';
 import Home from './ChirpRoutes/home';
 import EditChirp from './ChirpRoutes/adminPage';
 import AddChirp from './ChirpRoutes/addNewChirp';
+import Mentions from './ChirpRoutes/mentionsPage';
 
 const App: React.SFC<IAppProps> = () => {
 
@@ -11,13 +12,15 @@ const App: React.SFC<IAppProps> = () => {
         <Router>
             <React.Fragment>
                 <div className="d-flex justify-content-end m-3">
+                    <Link className="btn btn-primary m-3" to="/">Home</Link>
                     <Link className="btn btn-primary" to="/chirp/add">Add Chirp</Link>
                 </div>
 
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/chirp/:id/admin" component={EditChirp} />
-                    <Route path="/chirp/add" component={AddChirp} />
+                    <Route exact path="/chirp/:id/admin" component={EditChirp} />
+                    <Route exact path="/chirp/add" component={AddChirp} />
+                    <Route exact path="/chirp/mentions/:name" component={Mentions} />
                 </Switch>
             </React.Fragment>
         </Router>

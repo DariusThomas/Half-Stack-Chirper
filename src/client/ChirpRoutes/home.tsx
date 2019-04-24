@@ -10,30 +10,19 @@ const Home: SFC<IHomeProps> = () => {
 
     async function getChirps() {
         try {
-            let res = await fetch('/api/chirps')
+            let res = await fetch('/api/dbchirps')
             let data = await res.json()
-            placeChirps(data)
+            setChirps(data)
         } catch (err) {
             (err: string) => console.log(err)
         }
     }
 
-    function placeChirps(chirps: { [key: number]: { name: string, text: string } }) {
-        let stateArr = []
-        for (let prop in chirps) {
-            let chirpObj: { [key: number]: { name: string, text: string } } = {}
-            if (prop != 'nextid') {
-                chirpObj[prop] = chirps[prop]
-                stateArr.push(chirpObj);
-            }
-        }
-        setChirps(stateArr)
-    }
     return (
         <>    
                 {chirps.map(
-                    (chirp: { [key: number]: { name: string, text: string } }, index: number) => {
-                        return <Chirp key={index} chirpInfo={chirp} />
+                    (chirp: { id: string, text: string, name:string  }) => {
+                        return <Chirp key={chirp.id} chirpInfo={chirp} />
                     })}
         </>
     )

@@ -1,62 +1,86 @@
-import React, { SFC,useState,useEffect} from 'react';
+import React, { SFC, useState, useEffect } from 'react';
 import { RouteComponentProps } from "react-router-dom"
 import $ from 'jquery'
-const EditChirp: SFC<IEditChirpPROPS> = (props: RouteComponentProps<{ id: string }>) => {
-    const [chirp,setChirp]= useState("");
+const EditChirp: SFC<IEditChirpPROPS> = (props) => {
 
-    useEffect(()=>{
+    const [chirp, setChirp] = useState("");
+
+    useEffect(() => {
         getChirp();
-    },[])
+    }, [])
 
-    async function getChirp(){
-        try{
-            const res = await fetch(`/api/chirps/${props.match.params.id}`)
+    async function getChirp() {
+        try {
+            const res = await fetch(`/api/dbchirps/${props.match.params.id}`)
             const data = await res.json()
-             setChirp(data.text)
-             
-        } catch(err) {
+            setChirp(data[0].text)
+        } catch (err) {
             console.log(err)
         }
-            
+
     }
     function deleteChirp() {
         $.ajax({
             type: 'DELETE',
-            url: `/api/chirps/${props.match.params.id}`,
+            url: `/api/dbchirps/${props.match.params.id}`,
             success: function () {
                 props.history.push("/")
+            }
+        })
 
+    }
+    function editChirp() {
+        let chirpEdit = {
+            text: $(`#chirp-${props.match.params.id}`).val()
+        }
+        $.ajax({
+            type: "PUT",
+            url: `/api/dbchirps/${props.match.params.id}`,
+            data: JSON.stringify(chirpEdit),
+            contentType: 'application/json',
+            success: function () {
+               setMention()
             }
         })
     }
-function editChirp(){
-    let chirpEdit = {
-        name: "me",
-        text: $(`#chirp-${props.match.params.id}`).val()
-    }
-    $.ajax({
-        type: "PUT",
-        url: `/api/chirps/${props.match.params.id}`,
-        data: JSON.stringify(chirpEdit),
-        contentType: 'application/json',
-        success: function () {
-            props.history.push("/")
+
+    function setMention() {
+        let str:string = $(`#chirp-${props.match.params.id}`).val()
+        if (/@[A-Za-z]+/gm.test(str)) {
+            let mentionsArr: Array<string> = str.match(/@[A-Za-z]+/gm);
+            for (let i = 0; i < mentionsArr.length; i++) {
+                let tagged = mentionsArr[i].replace("@", "")
+                let mention: { name: string, chirpId: string } = {
+                    name: tagged,
+                    chirpId: props.match.params.id
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/mentions/add',
+                    data: JSON.stringify(mention),
+                    contentType: 'application/json',
+                    success: function(res){
+                        props.history.push('/')
+                    }
+                })
+            }
         }
-    })
-}
-function handleChange(){
-    setChirp($(`#chirp-${props.match.params.id}`).val())
-}
+    }
+
+
+    function handleChange(e:any) {
+        setChirp(e.target.value)
+    }
     return (
         <React.Fragment>
-                <div>
+            <div>
 
-                    <input id={`chirp-${props.match.params.id}`} onChange={handleChange}  value ={chirp} type="text" />
-                </div>
-                <div>
-                    <button className="btn btn-primary" onClick={editChirp}>Submit Edit</button>
-                    <button className="btn btn-danger" onClick={deleteChirp} >Delete Chirp</button>
-                </div>
+                <input id={`chirp-${props.match.params.id}`} onChange={handleChange} value={chirp} type="text" />
+            </div>
+            <div>
+                <button className="btn btn-primary" onClick={editChirp}>Submit Edit</button>
+                <button className="btn btn-danger" onClick={deleteChirp} >Delete Chirp</button>
+            </div>
         </React.Fragment>
     )
 }

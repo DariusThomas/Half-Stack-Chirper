@@ -1,21 +1,20 @@
 import React, { SFC } from "react";
 import { Link } from "react-router-dom"
-
+import $ from "jquery";
 const Chirp: SFC<IChirpProps> = ({ chirpInfo }) => {
-
-    let keyNum: number = parseInt(Object.keys(chirpInfo)[0], 10)
 
     return (
         <>
             <div className="border border-secondary">
-            <h1>{chirpInfo[keyNum].text}</h1>
-            <Link className="btn btn-primary" to={`/chirp/${keyNum}/admin`} >edit</Link>
+            <Link to={`/chirp/mentions/${chirpInfo.name}`}>{chirpInfo.name}</Link>
+            <h3>{chirpInfo.text}</h3>
+            <Link className="btn btn-primary" to={`/chirp/${chirpInfo.id}/admin`} >edit</Link>
             </div>
         </>
             )
         }
 interface IChirpProps {
-                chirpInfo: {[key: number]: {name: string, text: string } }
+                chirpInfo: {id: string, text: string, name:string } 
         };
         
         
