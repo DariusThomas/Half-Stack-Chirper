@@ -39,7 +39,7 @@ const AddChirp: SFC<IEditChirpPROPS> = (props) => {
 
     
         function setMentions() {
-        let str: string = $('#chirpInput').val()
+        let str: any = $('#chirpInput').val()
         if (/@[A-Za-z]+/gm.test(str)) {
             let mentionsArr: Array<string> = str.match(/@[A-Za-z]+/gm);
             for (let i = 0; i < mentionsArr.length; i++) {

@@ -17,7 +17,7 @@ const Home: SFC<IHomeProps> = () => {
             (err: string) => console.log(err)
         }
     }
-
+    
     return (
         <>    
                 {chirps.map(

@@ -12,8 +12,8 @@ const App: React.SFC<IAppProps> = () => {
         <Router>
             <React.Fragment>
                 <div className="d-flex justify-content-end m-3">
-                    <Link className="btn btn-primary m-3" to="/">Home</Link>
-                    <Link className="btn btn-primary" to="/chirp/add">Add Chirp</Link>
+                    <Link className="btn btn-primary mx-1" to="/">Home</Link>
+                    <Link className="btn btn-primary mx-1" to="/chirp/add">Add Chirp</Link>
                 </div>
 
                 <Switch>
