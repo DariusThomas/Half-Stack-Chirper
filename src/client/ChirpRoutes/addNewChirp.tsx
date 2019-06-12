@@ -5,11 +5,11 @@ import $ from "jquery"
 const AddChirp: SFC<IEditChirpPROPS> = (props) => {
 
     const [chirpId, setChirpId] = useState(null);
-    
-    useEffect(() =>{
+
+    useEffect(() => {
         console.log('hi')
         setMentions()
-    },[chirpId])
+    }, [chirpId])
 
     async function handleClick() {
         let chirp = {
@@ -37,8 +37,8 @@ const AddChirp: SFC<IEditChirpPROPS> = (props) => {
 
     }
 
-    
-        function setMentions() {
+
+    function setMentions() {
         let str: any = $('#chirpInput').val()
         if (/@[A-Za-z]+/gm.test(str)) {
             let mentionsArr: Array<string> = str.match(/@[A-Za-z]+/gm);
@@ -58,7 +58,7 @@ const AddChirp: SFC<IEditChirpPROPS> = (props) => {
                     }
                 })
             }
-        } else if(chirpId){
+        } else if (chirpId) {
             props.history.push('/')
         }
     }
@@ -66,12 +66,17 @@ const AddChirp: SFC<IEditChirpPROPS> = (props) => {
 
     return (
         <Fragment>
-            <div>
-                <input id={'chirpInput'} type="text" placeholder="Add Chirp..." />
+          <div className="d-flex justify-content-center align-items-center h-50 w-100 ">
+            <div className="anim d-flex flex-column justify-content-center align-items-center add-chirp-container border border-secondary rounded" >
+                <h3>Add Chirp</h3>
+                <div className="p-2" >
+                    <textarea id={'chirpInput'} placeholder="Add Chirp..." ></textarea>
+                </div>
+                <div className="p-2">
+                    <button className="btn btn-primary" onClick={handleClick}>Add Chirp</button>
+                </div>
             </div>
-            <div>
-                <button className="btn btn-primary" onClick={handleClick}>Add Chirp</button>
-            </div>
+        </div>
         </Fragment>
 
     )

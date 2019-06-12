@@ -11,11 +11,10 @@ const App: React.SFC<IAppProps> = () => {
     return (
         <Router>
             <React.Fragment>
-                <div className="d-flex justify-content-end m-3">
-                    <Link className="btn btn-primary mx-1" to="/">Home</Link>
-                    <Link className="btn btn-primary mx-1" to="/chirp/add">Add Chirp</Link>
+                <div  className="d-flex justify-content-end text-light bg-dark h-nav">
+                    <Link  className="nav-link mx-1" to="/">Home</Link>
+                    <Link className="nav-link mx-1" to="/chirp/add">Add Chirp</Link>
                 </div>
-
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/chirp/:id/admin" component={EditChirp} />
